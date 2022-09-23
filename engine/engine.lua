@@ -1,5 +1,9 @@
+require "engine/shape/shape_preview"
+require "engine/shape/shape_drawing"
+
+require "engine/util"
+
 require "objects/object_common"
-require "engine/engine_util"
 
 objects = require "engine/objects_handle"
 
@@ -32,9 +36,6 @@ function Engine:new(meter, horizontalGravity, verticalGravity)
 end
 
 function Engine:update(dt, sett_gui)
-
-
-
     local r, g, b, a = nuklear.colorParseRGBA(sett_gui.currentColor)
 
     -- World update
@@ -116,8 +117,6 @@ function Engine:update(dt, sett_gui)
             table.remove(objects.obj, i)
         end
     end
-
-
 end
 
 function Engine:draw()
@@ -128,39 +127,17 @@ function Engine:draw()
         love.graphics.setColor(1, 1, 1)
 
         if self.currentShape == "Rectangle" then
-            love.graphics.rectangle("line", x, y, love.mouse.getX() - x, love.mouse.getY() - y)
-
+            drawRectanglePreview(x, y)
+            
         elseif self.currentShape == "Circle" then
-            love.graphics.circle("line", x, y, (((love.mouse.getX() - x < 0) and -love.mouse.getX() + x or love.mouse.getX() - x) + ((love.mouse.getY() - y < 0) and -love.mouse.getY() + y or love.mouse.getY() - y)) / 2)
+            drawCirclePreview(x, y)
 
         elseif self.currentShape == "Polygon" then
-            for i, vertex in ipairs(vertices) do
-                if i % 2 == 0 then
-                    if vertices[i + 1] and vertices[i + 2] then
-                        love.graphics.line(vertices[i - 1], vertices[i], vertices[i + 1], vertices[i + 2])
-                    end
-                    love.graphics.line(vertices[#vertices - 1], vertices[#vertices], love.mouse.getPosition())
-                end
-            end
+            drawPolygonPreview(vertices)
         end
     end
 
-    for i, _obj in ipairs(objects.obj) do
-        if collidePoint(_obj, love.mouse.getPosition()) then
-            if _obj.type == "rectangle" then
-                love.graphics.setColor(100/255, 1, 1)
-                drawRectanglePreview(_obj)
-            
-            elseif _obj.type == "circle" then
-                love.graphics.setColor(100/255, 1, 1)
-                drawCirclePreview(_obj)
-
-            elseif _obj.type == "triangle" then
-                love.graphics.setColor(100/255, 1, 1)
-                drawPolygonPreview(_obj)
-            end
-        end
-    end
+    checkSelect(objects.obj)
 end
 
 function beginContact(obj1, obj2, coll)

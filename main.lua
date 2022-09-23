@@ -18,10 +18,10 @@ function love.load()
     player = Player:new(engine.world, winX / 2, winY / 2, 10, 100, 0.3, {1, 1, 1}, "player")
 
     -- World Barriers
-    objects:add(Rectangle:new(engine.world, 0, 0, 1, winY, {1, 1, 1, 0}, "static", "barrier"))
-    objects:add(Rectangle:new(engine.world, 0, winY - 1, winX, 1, {1, 1, 1, 0}, "static", "barrier"))
-    objects:add(Rectangle:new(engine.world, winX - 1, 0, 1, winY, {1, 1, 1, 0}, "static", "barrier"))
-    objects:add(Rectangle:new(engine.world, 0, 0, winX, 1, {1, 1, 1, 0}, "static", "barrier"))
+    objects:add(Rectangle:new(engine.world, -2, -2, 1, winY, {1, 1, 1, 0}, "static", "barrier")) -- Left
+    objects:add(Rectangle:new(engine.world, -2, winY + 2, winX, 1, {1, 1, 1, 0}, "static", "barrier")) -- Bottom
+    objects:add(Rectangle:new(engine.world, winX + 2, 0, 1, winY, {1, 1, 1, 0}, "static", "barrier")) -- Right
+    objects:add(Rectangle:new(engine.world, -2, -2, winX, 1, {1, 1, 1, 0}, "static", "barrier")) -- Top
 end
 
 function love.update(dt)

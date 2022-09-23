@@ -1,4 +1,4 @@
-function drawRectanglePreview(obj)
+function drawRectangleSelect(obj)
     love.graphics.push()
         love.graphics.translate(obj.body:getX(), obj.body:getY())
         love.graphics.rotate(obj.body:getAngle())
@@ -6,11 +6,11 @@ function drawRectanglePreview(obj)
     love.graphics.pop() 
 end
 
-function drawCirclePreview(obj)
+function drawCircleSelect(obj)
     love.graphics.circle("line", obj.body:getX(), obj.body:getY(), obj.radius + 1)
 end
 
-function drawPolygonPreview(obj)
+function drawPolygonSelect(obj)
     love.graphics.polygon("line", obj.body:getWorldPoints(obj.shape:getPoints()))
 end
 
@@ -32,4 +32,4 @@ function exchangeVerticesY(y, height)
     return y, height
 end
 
-return {exchangeVerticesX, exchangeVerticesY, drawRectanglePreview, drawCirclePreview}
+return {exchangeVerticesX, exchangeVerticesY, drawRectangleSelect, drawCircleSelect, drawPolygonSelect}

@@ -15,7 +15,7 @@ function Polygon:new(world, x, y, vertices, color, state, id)
         fixture = fixture,
         color = color,
 
-        type = "triangle"
+        type = "polygon"
     }, Polygon)
 end
 
